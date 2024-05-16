@@ -1,6 +1,7 @@
 package ma.emsi.javaproject.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class Contact {
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "email", nullable = false)
+    @Email(message = "email")
     private String email;
     @Column(name = "subject", nullable = false)
     private String subject;
