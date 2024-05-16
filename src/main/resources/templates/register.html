@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <title>Sign Up</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Sign Up</h1>
-<p th:if="${param.error}" class="error">Registration failed</p>
-<form th:action="@{/register}" method="post" th:object="${user}">
-    <label for="email">Email </label>:
-    <input type="text" id="email"  th:field="*{email}" /> <br />
-    <label for="password">Password </label>:
-    <input type="password" id="password" th:field="*{password}"/> <br />
-    <label for="first_name">First Name </label>:
-    <input type="text" id="first_name"  th:field="*{firstName}" /> <br />
-    <label for="last_name">Last Name </label>:
-    <input type="text" id="last_name"  th:field="*{lastName}" /> <br />
-    <input type="submit" value="Sign Up" /> <br />
-</form>
-
-<p>Already have an account? </p> <br/>
-<a href="/login">Login</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center">Sign Up</h1>
+            <p th:if="${param.error}" class="alert alert-danger">Registration failed</p>
+            <form th:action="@{/register}" method="post" th:object="${user}">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" th:field="*{email}" placeholder="Enter your email" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Enter your password" />
+                </div>
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" class="form-control" id="first_name" th:field="*{firstName}" placeholder="Enter your first name" />
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" th:field="*{lastName}" placeholder="Enter your last name" />
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" class="btn btn-primary" value="Sign Up" />
+                </div>
+            </form>
+            <p class="text-center">Already have an account?</p>
+            <div class="text-center">
+                <a href="/login" class="btn btn-link">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
