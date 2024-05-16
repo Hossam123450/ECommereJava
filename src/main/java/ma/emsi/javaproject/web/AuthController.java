@@ -1,51 +1,84 @@
 package ma.emsi.javaproject.web;
-import ma.emsi.javaproject.entities.auth.JwtUtil;
 import ma.emsi.javaproject.entities.User;
-import ma.emsi.javaproject.entities.request.LoginReq;
-import ma.emsi.javaproject.entities.response.ErrorRes;
-import ma.emsi.javaproject.entities.response.LoginRes;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
+import ma.emsi.javaproject.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
-@RequestMapping("/rest/auth")
-public class AuthController
-{
+@RequestMapping("")
+public class AuthController {
+    private final UserService userService;
+
     private final AuthenticationManager authenticationManager;
-    private JwtUtil jwtUtil;
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil)
-    {
+
+    public AuthController(UserService userService, AuthenticationManager authenticationManager) {
+        this.userService = userService;
         this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
     }
-    @ResponseBody
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody LoginReq loginReq)
-    {
-        try
-        {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()));
-            String email = authentication.getName();
-            User user = new User(email,"");
-            String token = jwtUtil.createToken(user);
-            LoginRes loginRes = new LoginRes(email,token);
-            return ResponseEntity.ok(loginRes);
-        }
-        catch (BadCredentialsException e)
-        {
-            ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST,"Invalid username or password");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-        }
-        catch (Exception e)
-        {
-            ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-        }
+
+
+
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String login(){
+        return "login";
     }
+
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.invalidate();
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(null);
+        return "redirect:/login";
+    }
+
+
+    @RequestMapping(value = "/register",method = RequestMethod.GET)
+    public String register(HttpServletRequest request, HttpServletResponse response, Model model){
+        User user = new User();
+        model.addAttribute("user",user);
+        return "register";
+    }
+
+
+
+
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public String createNewUser(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("user")User user){
+
+        try {
+
+            user.setRole("USER");
+
+            User newUser = userService.createUser(user);
+            if(newUser == null){
+                return "redirect:/register?error";
+            }
+
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            securityContext.setAuthentication(authentication);
+            HttpSession session = request.getSession(true);
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,securityContext);
+
+            return "redirect:/";
+
+        } catch (Exception e){
+            return "redirect:/register?error";
+        }
+
+    }
+
+
 }

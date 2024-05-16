@@ -1,4 +1,4 @@
-package ma.emsi.javaproject.entities.response;
+package ma.emsi.javaproject.response;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;

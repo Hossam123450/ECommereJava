@@ -1,4 +1,4 @@
-package ma.emsi.javaproject.entities.auth;
+package ma.emsi.javaproject.auth;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
