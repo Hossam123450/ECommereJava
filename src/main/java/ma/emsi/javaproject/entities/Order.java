@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,7 +19,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     @Column(name = "transporterName", nullable = false)
@@ -35,10 +36,13 @@ public class Order {
     private String reference;
     @Column(name = "stripeSessionId", nullable = false)
     private String stripeSessionId;
+    @Column(name = "address", nullable = false)
+    private String address;
     @Column(name = "paypalOrderId", nullable = false)
     private String paypalOrderId;
     @OneToMany(fetch = FetchType.EAGER)
     private Collection<RecapDetails> recapDetails;
+
     public Order addRecapDetail(RecapDetails recapDetail)
     {
         if (!this.recapDetails.contains(recapDetail)) {

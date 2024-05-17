@@ -18,6 +18,9 @@ public class ContactController {
 
     @Autowired
     private ContactRepository contactRepository;
+    public ContactController(ContactRepository contactRepository){
+        this.contactRepository=contactRepository;
+    }
 
     @GetMapping
     public String showContactForm(Model model) {
