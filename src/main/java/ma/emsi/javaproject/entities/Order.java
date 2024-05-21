@@ -4,22 +4,18 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "`order`")
+@Table(name = "order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Temporal(TemporalType.DATE)
-    private LocalDateTime createdAt;
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     @Column(name = "transporterName", nullable = false)

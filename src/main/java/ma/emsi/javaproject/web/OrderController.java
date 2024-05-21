@@ -29,7 +29,7 @@ public class OrderController {
         Order order = new Order();
         order.setUser(user);
         model.addAttribute("order", order);
-        model.addAttribute("recapCart", cartService.getTotal());
+//        model.addAttribute("recapCart", cartService.getTotal());
         model.addAttribute("products",productRepository.findAll());
         return "order";
     }

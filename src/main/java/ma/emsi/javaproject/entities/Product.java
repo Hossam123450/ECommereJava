@@ -24,6 +24,8 @@ public class Product {
     private String subtitle;
     @Column(name = "price", nullable = false)
     private Float price;
+    @Column(name = "quantity")
+    private Integer quantity=0;
     @Column(name = "image", nullable = false)
     private String image;
     @UploadableField(mapping = "products", fileNameProperty = "image")
