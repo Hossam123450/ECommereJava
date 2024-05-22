@@ -1,20 +1,13 @@
 package ma.emsi.javaproject.services;
 
 import ma.emsi.javaproject.entities.Cart;
-import ma.emsi.javaproject.entities.RecapDetails;
 import ma.emsi.javaproject.entities.User;
 import ma.emsi.javaproject.repositories.CartRepository;
 import ma.emsi.javaproject.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import  ma.emsi.javaproject.entities.Product;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpSession;
-import java.util.*;
 
 
 @Service

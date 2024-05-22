@@ -10,7 +10,7 @@ import java.util.List;
 
 @Transactional
 public interface ProductRepository extends JpaRepository<Product,Integer>{
-    List<Product> findByFullName(String name);
-    List<Product> findByFullNameContains(String name);
+//    List<Product> findByFullName(String name);
+//    List<Product> findByFullNameContains(String name);
     Page<Product> findByFullNameContains(String name, PageRequest pageable);
 }

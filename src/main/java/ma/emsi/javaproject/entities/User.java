@@ -22,6 +22,8 @@ public class User {
     private String firstName;
     @Column(name = "LAST_NAME")
     private String lastName;
+    @Column(name = "Address")
+    private String address;
     @Column(name = "ROLE")
     private String role;
 

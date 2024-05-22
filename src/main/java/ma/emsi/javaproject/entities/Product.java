@@ -15,7 +15,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "title", nullable = false)
-    private String title;
+    private String fullName;
     @Column(name = "slug", nullable = false)
     private String slug;
     @Column(name = "content", nullable = false)
@@ -30,7 +30,6 @@ public class Product {
     private String image;
     @UploadableField(mapping = "products", fileNameProperty = "image")
     private File attachmentFile;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private CategoryShop category;
+
 
 }

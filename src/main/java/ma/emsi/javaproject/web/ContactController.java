@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/contact")
@@ -29,7 +29,7 @@ public class ContactController {
     }
 
     @PostMapping
-    public String submitContactForm(@Valid @ModelAttribute("contact") Contact contact, BindingResult result, Model model) {
+    public String submitContactForm(@ModelAttribute("contact") Contact contact, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "contact";
         }

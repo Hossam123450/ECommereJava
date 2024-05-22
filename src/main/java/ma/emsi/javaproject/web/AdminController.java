@@ -1,28 +1,31 @@
 package ma.emsi.javaproject.web;
 
+import jakarta.annotation.security.RolesAllowed;
 import ma.emsi.javaproject.entities.Product;
 import ma.emsi.javaproject.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+//@RolesAllowed("ADMIN")
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
-    @GetMapping(path = "/menu")
+    @GetMapping(path = "/")
     public String adminPage()
     {
-
-        return "admin";
+        return "Admin/admin";
     }
     @GetMapping(path = "/product")
     public String allProducts(Model model,
@@ -40,13 +43,13 @@ public class AdminController {
         model.addAttribute("size",size);
         model.addAttribute("currentPage",page);
         model.addAttribute("searchName",searchName);
-        return "products";
+        return "Admin/products";
     }
     @GetMapping(path="/create")
     public String createProduct(Model model){
         Product product = new Product();
         model.addAttribute("product", product);
-        return "formAddProduct";
+        return "Admin/formAddProduct";
 
     }
     @PostMapping(path = "/save")
@@ -79,7 +82,7 @@ public class AdminController {
         model.addAttribute("currentPage", page);
         model.addAttribute("searchName", search);
 
-        return "formEditProduct";
+        return "Admin/formEditProduct";
 
 
 
