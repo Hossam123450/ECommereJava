@@ -15,19 +15,30 @@
     <div class="p-3">
         <div class="card">
             <div class="card-header">Add New Product</div>
-            <form method="post" th:action="@{save}">
-                <div class="mb-3">
-                    <label for ="qte" class="form-control">QteStock</label>
-                    <input id ="qte" type="text" name="qte" th:value="${product.qteStock}">
-                </div>
+            <form method="post" th:action="@{save}" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for ="nom" class="form-control">Full Name</label>
                     <input id ="nom" type="text" name="fullName" th:value="${product.fullName}">
                 </div>
                 <div class="mb-3">
+                    <label for ="subtitle" class="form-control">Subtitle</label>
+                    <input id ="subtitle" type="text" name="subtitle" th:value="${product.subtitle}">
+                </div>
+                <div class="mb-3">
+                    <label for ="qte" class="form-control">QteStock</label>
+                    <input id ="qte" type="text" name="qte" th:value="${product.qteStock}">
+                </div>
+                <div class="mb-3">
                     <label for ="price" class="form-control">Price</label>
                     <input id ="price" type="text" name="price" th:value="${product.price}">
-
+                </div>
+                <div class="mb-3">
+                    <label for ="image" class="form-control">Image</label>
+                    <input id ="image" type="text" name="imageTitle" th:value="${product.image}">
+                </div>
+                <div class="mb-3">
+                    <label for ="file" class="form-control">Image File</label>
+                    <input id="file" name="image" type="file" accept="image/*" th:field="*{product.attachmentFile}">
                 </div>
 
                 <button class="btn btn-primary" type="submit">Create</button>

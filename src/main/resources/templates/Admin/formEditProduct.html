@@ -23,17 +23,28 @@
                 <input  type="hidden" name="searchName" th:value="${searchName}">
 
                 <div class="mb-3">
-                    <label for ="qte" class="form-control">Qte Stock</label>
-                    <input id ="qte" type="text" name="qte" th:value="${product.qteStock}">
-                </div>
-                <div class="mb-3">
                     <label for ="nom" class="form-control">Full Name</label>
                     <input id ="nom" type="text" name="fullName" th:value="${product.fullName}">
                 </div>
                 <div class="mb-3">
+                    <label for ="subtitle" class="form-control">Subtitle</label>
+                    <input id ="subtitle" type="text" name="subtitle" th:value="${product.subtitle}">
+                </div>
+                <div class="mb-3">
+                    <label for ="qte" class="form-control">QteStock</label>
+                    <input id ="qte" type="text" name="qte" th:value="${product.qteStock}">
+                </div>
+                <div class="mb-3">
                     <label for ="price" class="form-control">Price</label>
                     <input id ="price" type="text" name="price" th:value="${product.price}">
-
+                </div>
+                <div class="mb-3">
+                    <label for ="image" class="form-control">Image</label>
+                    <input id ="image" type="text" name="image" th:value="${product.image}">
+                </div>
+                <div class="mb-3">
+                    <label for ="file" class="form-control">Image File</label>
+                    <input id="file" type="file" th:field="*{product.attachmentFile}">
                 </div>
 
                 <button class="btn btn-primary" type="submit">Update</button>

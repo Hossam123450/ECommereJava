@@ -15,7 +15,7 @@
     <div class="p-3">
         <div class="card">
             <div class="card-header">Liste Produits</div>
-            <form method="get" th:action="@{product}">
+            <form method="get" th:action="@{admin/product}">
                 <input type="text" name="search" th:value="${searchName}">
                 <button class="btn btn-primary" type="submit">Search</button>
 
@@ -26,9 +26,12 @@
                     <thead>
                     <tr>
                         <td>Id</td>
-                        <td>Qte</td>
                         <td>Name</td>
+                        <td>Subtitle</td>
+                        <td>Qte</td>
                         <td>Price</td>
+                        <td>Image</td>
+                        <td>File</td>
                         <td></td>
                         <td></td>
 
@@ -38,9 +41,12 @@
                     <tr th:each="s:${pagesProducts}">
 
                         <td th:text="${s.id}"></td>
-                        <td th:text="${s.qteStock}"></td>
                         <td th:text="${s.fullName}"></td>
+                        <td th:text="${s.subtitle}"></td>
+                        <td th:text="${s.qteStock}"></td>
                         <td th:text="${s.price}"></td>
+                        <td th:text="${s.image}"></td>
+                        <td><img th:src="${s.attachmentFile}" alt="Attachment"/></td>
 
                         <td >
                             <a class="btn btn-danger"

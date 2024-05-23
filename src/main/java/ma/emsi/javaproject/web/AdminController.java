@@ -13,12 +13,20 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 //@RolesAllowed("ADMIN")
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    public static String UPLOAD_DIRECTORY = "C:/Users/achah/IdeaProjects/javaProject/uploads";
     @Autowired
     private ProductRepository productRepository;
 
@@ -54,11 +62,17 @@ public class AdminController {
     }
     @PostMapping(path = "/save")
     public String saveProduct(Model model, Product s,
+                                  @RequestParam("attachmentFile") MultipartFile file,
                               @RequestParam(name="currentPage", defaultValue = "0") int page,
                               @RequestParam(name="size", defaultValue = "3") int size,
-                              @RequestParam(name="searchName", defaultValue = "") String search){
+                              @RequestParam(name="searchName", defaultValue = "") String search) throws IOException{
+        StringBuilder fileNames = new StringBuilder();
+        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+        fileNames.append(file.getOriginalFilename());
+        Files.write(fileNameAndPath, file.getBytes());
         productRepository.save(s);
-        return "redirect:/product?page="+page+"&size="+size+"&search="+search;
+
+        return "redirect:/admin/product?page="+page+"&size="+size+"&search="+search;
 
 
     }
