@@ -33,8 +33,7 @@
                                 <h5 class="card-title" th:text="${s.fullName}"></h5>
                                 <p class="card-text" th:text="${s.subtitle}"></p>
                                 <p class="card-text"><strong>Prix: </strong><span th:text="${s.price}"></span></p>
-                                <form method="post" th:action="@{/cart/add}">
-                                    <input type="hidden" name="productId" th:value="${s.id}">
+                                <form method="get" th:action="@{/MyCart/add/{id}(id=${s.id})}">
                                     <button class="btn btn-success" type="submit">Ajouter au panier</button>
                                 </form>
                             </div>

@@ -13,18 +13,35 @@ import  ma.emsi.javaproject.entities.Product;
 @Service
 public class CartService {
 
-    private final ProductRepository productRepository;
-    private final CartRepository cartRepository;
-
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private CartRepository cartRepository;
     @Autowired
     public CartService(ProductRepository productRepository, CartRepository cartRepository) {
-        this.productRepository = productRepository;
+        if (productRepository == null) {
+            System.out.println("productRepository is null");
+        } else {
+            System.out.println("productRepository is initialized");
+        }
+        this.productRepository=productRepository;
         this.cartRepository = cartRepository;
-
+        if (productRepository == null) {
+            System.out.println("productRepository is null");
+        } else {
+            System.out.println("productRepository is initialized");
+        }
     }
 
-    public void addToCart(Integer id,@AuthenticationPrincipal User user) {
 
+    public void addToCart(Integer id,@AuthenticationPrincipal User user) {
+//makidkholch lhna ga3
+        if (productRepository == null) {
+            System.out.println("productRepository is null");
+        } else {
+            System.out.println("productRepository is initialized");
+        }
+        assert productRepository != null;
         Product product = productRepository.findById(id).orElse(null);
         Cart cart=cartRepository.findByUser(user);
         if (product != null) {
@@ -33,7 +50,7 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public void removeToCart(int id,@AuthenticationPrincipal User user) {
+    public void removeToCart(Integer id,@AuthenticationPrincipal User user) {
         Product product=productRepository.findById(id).orElse(null);
         Cart cart=cartRepository.findByUser(user);
         if (product != null) {

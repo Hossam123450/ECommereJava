@@ -21,7 +21,12 @@ public class ProductController {
 //        this.productRepository=productRepository;
 //    }
     @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     @GetMapping(path = "/product")
     public String allProducts(Model model,
                               @RequestParam(name="page",defaultValue = "0") int page,

@@ -1,5 +1,8 @@
 package ma.emsi.javaproject.web;
 import ma.emsi.javaproject.entities.User;
+import ma.emsi.javaproject.repositories.CartRepository;
+import ma.emsi.javaproject.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -12,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class CartController
 {
+    private final CartService cartService;
+    @Autowired
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
     @GetMapping(path = "/MyCart")
     public String cartPage(CartService cartService,Model model,@AuthenticationPrincipal User user)
     {
@@ -19,13 +27,13 @@ public class CartController
         return "cart";
     }
     @GetMapping(value = "/MyCart/add/{id}")
-    public String addToCart(CartService cartService,@PathVariable("id") int id,@AuthenticationPrincipal User user)
+    public String addToCart(CartService cartService,@PathVariable("id") Integer id,@AuthenticationPrincipal User user)
     {
         cartService.addToCart(id,user);
         return "redirect:/MyCart";
     }
     @GetMapping(value = "/MyCart/remove/{id}")
-    public String removeToCart(CartService cartService,@PathVariable("id") int id,@AuthenticationPrincipal User user)
+    public String removeToCart(CartService cartService,@PathVariable("id") Integer id,@AuthenticationPrincipal User user)
     {
         cartService.removeToCart(id,user);
         return "redirect:/MyCart";
