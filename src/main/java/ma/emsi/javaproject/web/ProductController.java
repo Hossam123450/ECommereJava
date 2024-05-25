@@ -27,7 +27,7 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    @GetMapping(path = "/product")
+    @GetMapping(path = "/")
     public String allProducts(Model model,
                               @RequestParam(name="page",defaultValue = "0") int page,
                               @RequestParam(name="size",defaultValue = "3")int size,

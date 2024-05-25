@@ -19,28 +19,14 @@ public class CartService {
     private CartRepository cartRepository;
     @Autowired
     public CartService(ProductRepository productRepository, CartRepository cartRepository) {
-        if (productRepository == null) {
-            System.out.println("productRepository is null");
-        } else {
-            System.out.println("productRepository is initialized");
-        }
+
         this.productRepository=productRepository;
         this.cartRepository = cartRepository;
-        if (productRepository == null) {
-            System.out.println("productRepository is null");
-        } else {
-            System.out.println("productRepository is initialized");
-        }
+
     }
 
-
-    public void addToCart(Integer id,@AuthenticationPrincipal User user) {
-//makidkholch lhna ga3
-        if (productRepository == null) {
-            System.out.println("productRepository is null");
-        } else {
-            System.out.println("productRepository is initialized");
-        }
+    public void addToCart(Integer id,User user) {
+        System.out.println("dkhol");
         assert productRepository != null;
         Product product = productRepository.findById(id).orElse(null);
         Cart cart=cartRepository.findByUser(user);
