@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="menu">
+      layout:decorate="Admin/admin">
 <head>
     <meta charset="UTF-8">
     <title>New Product</title>
@@ -31,10 +31,6 @@
                 <div class="mb-3">
                     <label for ="price" class="form-control">Price</label>
                     <input id ="price" type="text" name="price" th:value="${product.price}">
-                </div>
-                <div class="mb-3">
-                    <label for ="image" class="form-control">Image</label>
-                    <input id ="image" type="text" name="imageTitle" th:value="${product.image}">
                 </div>
                 <div class="mb-3">
                     <label for ="file" class="form-control">Image File</label>

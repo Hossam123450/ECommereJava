@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,13 +21,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 //@RolesAllowed("ADMIN")
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    public static String UPLOAD_DIRECTORY = "C:/Users/achah/IdeaProjects/javaProject/uploads";
+    public static String UPLOAD_DIRECTORY = "C:/Users/achah/IdeaProjects/javaProject/uploads/";
     @Autowired
     private ProductRepository productRepository;
 
@@ -66,11 +68,20 @@ public class AdminController {
                               @RequestParam(name="currentPage", defaultValue = "0") int page,
                               @RequestParam(name="size", defaultValue = "3") int size,
                               @RequestParam(name="searchName", defaultValue = "") String search) throws IOException{
-        StringBuilder fileNames = new StringBuilder();
-        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
-        fileNames.append(file.getOriginalFilename());
-        Files.write(fileNameAndPath, file.getBytes());
+
+//        StringBuilder fileNames = new StringBuilder();
+//        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+//        fileNames.append(file.getOriginalFilename());
+//        Files.write(fileName, file.getBytes());
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//        s.setImage(UPLOAD_DIRECTORY+fileName);
+//        productRepository.save(s);
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String uploadDir = "uploads/";
+        s.setImage(uploadDir + fileName);
+        Files.copy(file.getInputStream(), Paths.get(UPLOAD_DIRECTORY).resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
         productRepository.save(s);
+
 
         return "redirect:/admin/product?page="+page+"&size="+size+"&search="+search;
 
@@ -83,7 +94,7 @@ public class AdminController {
             @RequestParam(name="id") Integer id){
         productRepository.deleteById(id);
 
-        return "redirect:/product?page="+page+"&size="+size+"&search="+search;
+        return "redirect:/admin/product?page="+page+"&size="+size+"&search="+search;
     }
 
 

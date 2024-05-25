@@ -22,9 +22,9 @@ public class Product {
     private String subtitle;
     @Column(name = "price", nullable = false)
     private Float price;
-    @Column(name = "qteStock")
-    private Integer qteStock;
-    @Column(name = "quantity")
+    @Column(name = "qteStock", nullable = false)
+    private Integer qteStock=0;
+    @Column(name = "quantity", nullable = false)
     private Integer quantity=0;
     @Column(name = "image", nullable = false)
     private String image;

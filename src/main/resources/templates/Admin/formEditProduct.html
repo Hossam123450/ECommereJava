@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="menu">
+      layout:decorate="admin">
 
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
     <div class="p-3">
         <div class="card">
             <div class="card-header">Edit Product</div>
-            <form method="post" th:action="@{save}">
+            <form method="post" th:action="@{save}" enctype="multipart/form-data">
 
                 <input id ="id" type="hidden" name="id" th:value="${product.id}">
                 <input   type="hidden" name="currentPage" th:value="${currentPage}">
@@ -39,12 +39,8 @@
                     <input id ="price" type="text" name="price" th:value="${product.price}">
                 </div>
                 <div class="mb-3">
-                    <label for ="image" class="form-control">Image</label>
-                    <input id ="image" type="text" name="image" th:value="${product.image}">
-                </div>
-                <div class="mb-3">
                     <label for ="file" class="form-control">Image File</label>
-                    <input id="file" type="file" th:field="*{product.attachmentFile}">
+                    <input id="file" name="image" type="file" accept="image/*" th:field="*{product.attachmentFile}">
                 </div>
 
                 <button class="btn btn-primary" type="submit">Update</button>
