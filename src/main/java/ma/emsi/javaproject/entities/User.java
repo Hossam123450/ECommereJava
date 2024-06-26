@@ -4,7 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
 
 //@Entity
 //@Data
@@ -70,10 +75,6 @@ public class User implements UserDetails {
 
     @Column(name = "ROLE", nullable = false)
     private String role;
-
-    public User() {
-        // Default constructor
-    }
 
     public User(String email, String password) {
         this.email = email;

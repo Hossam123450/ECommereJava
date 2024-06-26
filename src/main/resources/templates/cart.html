@@ -14,7 +14,7 @@
 <div layout:fragment="content">
     <div class="p-3">
         <div class="card">
-            <div class="card-header">Panier</div>
+            <div class="card-header">Cart</div>
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <div class="col" th:each="s:${cart.products}">
@@ -24,7 +24,18 @@
                                 <h5 class="card-title" th:text="${s.fullName}"></h5>
                                 <p class="card-text" th:text="${s.subtitle}"></p>
                                 <p class="card-text"><strong>Prix: </strong><span th:text="${s.price}"></span></p>
-                                <form method="get" th:action=#>
+                                <td>
+                                    <form method="get" th:action="@{/MyCart}">
+                                        <button type="submit" class="btn btn-outline-info btn-sm">+</button>
+                                    </form>
+                                            <p class="card-text" th:text="${s.quantity}"></p>
+                                    <form method="get" th:action="@{/MyCart}">
+                                        <button type="submit" class="btn btn-outline-info btn-sm">-</button>
+                                    </form>
+                                    <a class="btn btn-danger btn-sm" th:href="@{/MyCart/remove/{id}(id=${s.id})}">remove</a>
+                                    <a class="btn btn-outline-dark btn-sm" th:href="@{/MyCart/removeAll}">remove all</a>
+                                </td>
+                                <form method="get" th:action="@{/MyCart}">
                                     <button class="btn btn-success" type="submit">Payer</button>
                                 </form>
                             </div>

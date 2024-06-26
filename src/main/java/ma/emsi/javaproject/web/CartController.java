@@ -17,6 +17,7 @@ import ma.emsi.javaproject.services.CartService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
+@RequestMapping("/MyCart")
 public class CartController
 {
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
@@ -26,31 +27,23 @@ public class CartController
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
-    @GetMapping(path = "/MyCart")
-    public String cartPage(CartService cartService,Model model)
+    @GetMapping(path = "")
+    public String cartPage(Model model)
     {
         User user = getAuthenticatedUser();
+        logger.info("usercart object: {}",cartService.getCart(user));
         model.addAttribute("cart",cartService.getCart(user));
         return "cart";
     }
-    @GetMapping(value = "/MyCart/add/{id}")
-    public String addToCart(CartService cartService,@PathVariable("id") Integer id) throws Exception {
-        User user = null;
-        try {
-            user = getAuthenticatedUser();
-        } catch (Exception e) {
-            throw new Exception("user is null");
-        } finally {
-            System.out.println(user.getFirstName());
-
-        }
-
+    @GetMapping(value = "/add/{id}")
+    public String addToCart(@PathVariable("id") Integer id) {
+        User user = getAuthenticatedUser();
         cartService.addToCart(id,user);
         return "redirect:/MyCart";
     }
-    @GetMapping(value = "/MyCart/remove/{id}")
-    public String removeToCart(CartService cartService,@PathVariable("id") Integer id,@AuthenticationPrincipal User user)
-    {
+    @GetMapping(value = "/remove/{id}")
+    public String removeToCart(@PathVariable("id") Integer id) {
+        User user = getAuthenticatedUser();
         cartService.removeToCart(id,user);
         return "redirect:/MyCart";
     }
@@ -60,11 +53,23 @@ public class CartController
 //        cartService.decrease(id);
 //        return "redirect:/MyCart";
 //    }
-    @GetMapping(value = "/MyCart/removeAll")
-    public String removeAll(CartService cartService,@AuthenticationPrincipal User user)
-    {
+    @GetMapping(value = "/removeAll")
+    public String removeAll() {
+        User user = getAuthenticatedUser();
         cartService.removeCartAll(user);
-        return "redirect:/products";
+        return "redirect:/product";
+    }
+    @GetMapping(value = "/increase")
+    public String increaseProduct() {
+        User user = getAuthenticatedUser();
+        cartService.addToCart(id,user);
+        return "redirect:/MyCart";
+    }
+    @GetMapping(value = "/decrease")
+    public String decreaseProduct() {
+        User user = getAuthenticatedUser();
+        cartService.addToCart(id,user);
+        return "redirect:/MyCart";
     }
     private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

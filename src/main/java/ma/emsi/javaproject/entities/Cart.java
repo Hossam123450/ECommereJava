@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -20,7 +22,7 @@ public class Cart {
     @OneToOne(fetch = FetchType.EAGER)
     private User user;
     @OneToMany(fetch = FetchType.EAGER)
-    private Collection<Product> products;
+    private Collection<Product> products = new ArrayList<>();
     public void addProduct(Product product){
         product.setQuantity(product.getQuantity()+1);
         products.add(product);

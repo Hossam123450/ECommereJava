@@ -32,7 +32,7 @@ public class AdminController {
     @Autowired
     private ProductRepository productRepository;
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public String adminPage()
     {
         return "Admin/admin";
