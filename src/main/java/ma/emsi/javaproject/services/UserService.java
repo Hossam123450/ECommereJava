@@ -2,6 +2,9 @@ package ma.emsi.javaproject.services;
 import ma.emsi.javaproject.entities.User;
 import ma.emsi.javaproject.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Service
 public class UserService {
@@ -18,4 +21,5 @@ public class UserService {
         userRepository.flush();
         return newUser;
     }
+
 }

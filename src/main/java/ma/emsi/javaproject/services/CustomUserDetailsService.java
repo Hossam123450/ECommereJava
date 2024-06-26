@@ -33,7 +33,9 @@ public class CustomUserDetailsService implements UserDetailsService
                         .roles(user.getRole())//roles("USER");
                         .build();
 
-        return userDetails;
+        return user;
     }
+
+
 }
 

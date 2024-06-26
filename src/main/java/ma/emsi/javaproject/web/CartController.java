@@ -2,6 +2,8 @@ package ma.emsi.javaproject.web;
 import ma.emsi.javaproject.entities.User;
 import ma.emsi.javaproject.repositories.CartRepository;
 import ma.emsi.javaproject.repositories.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class CartController
 {
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+
     private final CartService cartService;
     @Autowired
     public CartController(CartService cartService) {
@@ -30,13 +34,17 @@ public class CartController
         return "cart";
     }
     @GetMapping(value = "/MyCart/add/{id}")
-    public String addToCart(CartService cartService,@PathVariable("id") Integer id)
-    {
-        User user = getAuthenticatedUser();
-        if (user == null) {
-            System.out.println("User is null");
-            return "redirect:/login"; // Redirect to login if user is not authenticated
+    public String addToCart(CartService cartService,@PathVariable("id") Integer id) throws Exception {
+        User user = null;
+        try {
+            user = getAuthenticatedUser();
+        } catch (Exception e) {
+            throw new Exception("user is null");
+        } finally {
+            System.out.println(user.getFirstName());
+
         }
+
         cartService.addToCart(id,user);
         return "redirect:/MyCart";
     }
@@ -60,8 +68,17 @@ public class CartController
     }
     private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof User) {
-            return (User) authentication.getPrincipal();
+        if (authentication != null) {
+            logger.info("Authentication object: {}", authentication);
+            Object principal = authentication.getPrincipal();
+            logger.info("Principal object: {}", principal);
+            if (principal instanceof User) {
+                return (User) principal;
+            } else {
+                logger.info("Principal is not an instance of User: {}", principal.getClass().getName());
+            }
+        } else {
+            logger.info("No authentication object found");
         }
         return null;
     }
