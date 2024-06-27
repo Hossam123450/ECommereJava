@@ -25,22 +25,23 @@
                                 <p class="card-text" th:text="${s.subtitle}"></p>
                                 <p class="card-text"><strong>Prix: </strong><span th:text="${s.price}"></span></p>
                                 <td>
-                                    <form method="get" th:action="@{/MyCart}">
+                                    <form method="get" th:action="@{/MyCart/increase/{id}(id=${s.id})}">
                                         <button type="submit" class="btn btn-outline-info btn-sm">+</button>
                                     </form>
                                             <p class="card-text" th:text="${s.quantity}"></p>
-                                    <form method="get" th:action="@{/MyCart}">
+                                    <form method="get" th:action="@{/MyCart/decrease/{id}(id=${s.id})}">
                                         <button type="submit" class="btn btn-outline-info btn-sm">-</button>
                                     </form>
                                     <a class="btn btn-danger btn-sm" th:href="@{/MyCart/remove/{id}(id=${s.id})}">remove</a>
                                     <a class="btn btn-outline-dark btn-sm" th:href="@{/MyCart/removeAll}">remove all</a>
                                 </td>
-                                <form method="get" th:action="@{/MyCart}">
-                                    <button class="btn btn-success" type="submit">Payer</button>
-                                </form>
+
                             </div>
                         </div>
                     </div>
+                    <form method="get" th:action="@{/Details}">
+                        <button class="btn btn-success" type="submit">Details</button>
+                    </form>
                 </div>
             </div>
         </div>

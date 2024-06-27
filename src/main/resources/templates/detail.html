@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="menu">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="p-3">
+        <div class="card">
+            <div class="card-header">Cart</div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col" th:each="s:${cart.products}">
+                        <div class="card h-100">
+                            <img th:src="@{'/' + ${s.image}}" class="card-img-top" alt="Image du produit" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${s.fullName}"></h5>
+                                <p class="card-text" th:text="${s.quantity}"></p>
+                                <p class="card-text"><strong>Prix par quantité: </strong><span th:text="${s.price * s.quantity}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                        <div >
+                                <p ><strong>Total: </strong><span th:text="${total}"></span></p>
+                                <form method="get" th:action="@{/Payer}">
+                                    <button class="btn btn-success" type="submit">Payer en ligne</button>
+                                </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

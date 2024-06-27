@@ -35,7 +35,34 @@ public class Cart {
         products.forEach(product -> product.setQuantity(0));
         products.clear();
     }
-
-
+    public void increase(Integer id){
+        for (Product product : products) {
+            if (product.getId() == id) {
+                product.setQuantity(product.getQuantity()+1);
+            }
+        }
+    }
+    public void decrease(Integer id){
+        for (Product product : products) {
+            if (product.getId() == id) {
+                product.setQuantity(product.getQuantity()-1);
+            }
+        }
+    }
+    public double getTotal(){
+        double total=0.0;
+        for (Product product : products) {
+            total+=  product.getQuantity()*product.getPrice();
+        }
+        return total;
+    }
+//    public Product findProductById(int id) {
+//        for (Product product : products) {
+//            if (product.getId() == id) {
+//                return product;
+//            }
+//        }
+//        return null; // Retourne null si le produit n'est pas trouvé
+//    }
 
 }

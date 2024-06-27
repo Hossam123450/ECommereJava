@@ -54,6 +54,16 @@ public void addToCart(Integer id, User user) {
         cart.removeAll();
         cartRepository.save(cart);
     }
+    public void increaseQte(Integer id,User user) {
+        Cart cart=cartRepository.findByUser(user);
+        cart.increase(id);
+        cartRepository.save(cart);
+    }
+    public void decreaseQte(Integer id,User user) {
+        Cart cart=cartRepository.findByUser(user);
+        cart.decrease(id);
+        cartRepository.save(cart);
+    }
 
 //    public  getTotal() {
 //il doit retourner le product et sa quantity

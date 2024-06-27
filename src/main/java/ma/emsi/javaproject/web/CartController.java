@@ -59,16 +59,16 @@ public class CartController
         cartService.removeCartAll(user);
         return "redirect:/product";
     }
-    @GetMapping(value = "/increase")
-    public String increaseProduct() {
+    @GetMapping(value = "/increase/{id}")
+    public String increaseProduct(@PathVariable("id") Integer id) {
         User user = getAuthenticatedUser();
-        cartService.addToCart(id,user);
+        cartService.increaseQte(id,user);
         return "redirect:/MyCart";
     }
-    @GetMapping(value = "/decrease")
-    public String decreaseProduct() {
+    @GetMapping(value = "/decrease/{id}")
+    public String decreaseProduct(@PathVariable("id") Integer id) {
         User user = getAuthenticatedUser();
-        cartService.addToCart(id,user);
+        cartService.decreaseQte(id,user);
         return "redirect:/MyCart";
     }
     private User getAuthenticatedUser() {
