@@ -72,7 +72,7 @@ public class AuthController {
             HttpSession session = request.getSession(true);
             session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,securityContext);
 
-            return "redirect:/";
+            return "redirect:/product";
 
         } catch (Exception e){
             return "redirect:/register?error";
