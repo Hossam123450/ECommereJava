@@ -1,7 +1,9 @@
 package ma.emsi.javaproject.web;
 
 import jakarta.annotation.security.RolesAllowed;
+import ma.emsi.javaproject.entities.Contact;
 import ma.emsi.javaproject.entities.Product;
+import ma.emsi.javaproject.repositories.ContactRepository;
 import ma.emsi.javaproject.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
@@ -22,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 //@RolesAllowed("ADMIN")
 
@@ -31,8 +34,10 @@ public class AdminController {
     public static String UPLOAD_DIRECTORY = "C:/Users/achah/IdeaProjects/javaProject/uploads/";
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ContactRepository contactRepository;
 
-    @GetMapping(path = "")
+    @GetMapping(path = "/")
     public String adminPage()
     {
         return "Admin/admin";
@@ -111,6 +116,12 @@ public class AdminController {
 
 
 
+    }
+    @GetMapping(path = "/contact")
+    public String contactList(Model model){
+        List<Contact> contacts = contactRepository.findAll();
+        model.addAttribute("contacts", contacts);
+        return "Admin/contact";
     }
 
 }

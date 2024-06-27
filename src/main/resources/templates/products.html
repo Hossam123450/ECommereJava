@@ -7,22 +7,35 @@
     <meta charset="UTF-8">
     <title>Liste des Produits</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
-
-
+    <style>
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="p-3">
         <div class="card">
-            <div class="card-header">Liste Produits</div>
-                <nav class="navbar navbar-light bg-light">
-                    <form method="get" th:action="@{/product}" class="form-inline mx-auto">
-                        <div class="input-group input-group-lg mb-3">
-                            <input type="text" name="search" class="form-control mr-sm-2" aria-label="Search" th:value="${searchName}" placeholder="Rechercher des produits">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
-                        </div>
+            <div class="card-header">
+                <span class="display-4">Liste Produits</span>
+                <div>
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger me-2">Logout</button>
                     </form>
-                </nav>
+                    <a th:href="@{/admin/}" class="btn btn-primary">Administration</a>
+                </div>
+            </div>
+            <nav class="navbar navbar-light bg-light">
+                <form method="get" th:action="@{/product}" class="form-inline mx-auto">
+                    <div class="input-group input-group-lg mb-3">
+                        <input type="text" name="search" class="form-control mr-sm-2" aria-label="Search" th:value="${searchName}" placeholder="Rechercher des produits">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+                    </div>
+                </form>
+            </nav>
 
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -52,6 +65,9 @@
         </div>
     </div>
 </div>
-
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
