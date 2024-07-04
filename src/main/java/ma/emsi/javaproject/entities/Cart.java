@@ -25,10 +25,11 @@ public class Cart {
     private Collection<Product> products = new ArrayList<>();
     public void addProduct(Product product){
         product.setQuantity(product.getQuantity()+1);
-        products.add(product);
+        if(!products.contains(product))
+            products.add(product);
     }
     public void removeProduct(Product product){
-        product.setQuantity(product.getQuantity()-1);
+        product.setQuantity(0);
         products.remove(product);
     }
     public void removeAll(){
