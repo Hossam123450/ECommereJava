@@ -33,4 +33,11 @@ public class Product {
     private MultipartFile attachmentFile;
 
 
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public String getName() {
+        return fullName;
+    }
 }

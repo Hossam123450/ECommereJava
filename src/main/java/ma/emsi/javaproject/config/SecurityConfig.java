@@ -37,8 +37,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
          http.csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(("/login**"), ("/logout**"), ("/register**"), ("/contact**"), ("/")).permitAll()
-                        .requestMatchers("/admin**").hasRole("ADMIN")
+                        .requestMatchers("/login**", "/logout**", "/register", "/contact**", "/").permitAll()
+                        .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin().loginPage("/login").successHandler(successHandler());

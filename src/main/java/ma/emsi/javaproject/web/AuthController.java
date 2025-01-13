@@ -90,6 +90,7 @@ public class AuthController {
                 return "redirect:/register?error";
             }
 
+
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(authentication);
@@ -102,6 +103,23 @@ public class AuthController {
             return "redirect:/register?error";
         }
 
+
+    }
+    private User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            logger.info("Authentication object: {}", authentication);
+            Object principal = authentication.getPrincipal();
+            logger.info("Principal object: {}", principal);
+            if (principal instanceof User) {
+                return (User) principal;
+            } else {
+                logger.info("Principal is not an instance of User: {}", principal.getClass().getName());
+            }
+        } else {
+            logger.info("No authentication object found");
+        }
+        return null;
     }
 
 

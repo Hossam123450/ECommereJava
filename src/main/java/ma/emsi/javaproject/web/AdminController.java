@@ -3,8 +3,11 @@ package ma.emsi.javaproject.web;
 import jakarta.annotation.security.RolesAllowed;
 import ma.emsi.javaproject.entities.Contact;
 import ma.emsi.javaproject.entities.Product;
+import ma.emsi.javaproject.entities.User;
 import ma.emsi.javaproject.repositories.ContactRepository;
 import ma.emsi.javaproject.repositories.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Page;
@@ -12,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -27,10 +32,11 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 //@RolesAllowed("ADMIN")
-
+//@PreAuthorize("hasRole('ADMIN')")
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
     public static String UPLOAD_DIRECTORY = "C:/Users/achah/IdeaProjects/javaProject/uploads/";
     @Autowired
     private ProductRepository productRepository;
@@ -40,6 +46,8 @@ public class AdminController {
     @GetMapping(path = "/")
     public String adminPage()
     {
+//        User user = getAuthenticatedUser();
+//        logger.error("user object: {}",user.getRole());
         return "Admin/admin";
     }
     @GetMapping(path = "/product")
@@ -122,6 +130,22 @@ public class AdminController {
         List<Contact> contacts = contactRepository.findAll();
         model.addAttribute("contacts", contacts);
         return "Admin/contact";
+    }
+    private User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            logger.info("Authentication object: {}", authentication);
+            Object principal = authentication.getPrincipal();
+            logger.info("Principal object: {}", principal);
+            if (principal instanceof User) {
+                return (User) principal;
+            } else {
+                logger.info("Principal is not an instance of User: {}", principal.getClass().getName());
+            }
+        } else {
+            logger.info("No authentication object found");
+        }
+        return null;
     }
 
 }

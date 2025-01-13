@@ -65,6 +65,8 @@ public void addToCart(Integer id, User user) {
         cartRepository.save(cart);
     }
 
+
+
 //    public  getTotal() {
 //il doit retourner le product et sa quantity
 //    }

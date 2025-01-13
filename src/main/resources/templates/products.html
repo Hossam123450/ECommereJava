@@ -22,6 +22,9 @@
             <div class="card-header">
                 <span class="display-4">Liste Produits</span>
                 <div>
+                    <form method="get" th:action="@{/recommendation}" class="d-inline">
+                        <button type="submit" class="btn btn-info me-2">Recommandation</button>
+                    </form>
                     <form th:action="@{/logout}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-danger me-2">Logout</button>
                     </form>
